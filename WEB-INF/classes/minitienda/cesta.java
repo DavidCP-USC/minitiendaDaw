@@ -23,6 +23,7 @@ public class cesta extends HttpServlet {
         // Generamos un objeto para el contexto de la aplicacion
         ServletContext context = getServletContext();
         
+
         // Obtenemos el hashmap de la sesion que contiene los CDs y sus precios
         HashMap<HashMap, Float> cdSesion = (HashMap)session.getAttribute("cdSesion");
         if ( cdSesion == null )
