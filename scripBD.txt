@@ -31,7 +31,7 @@ lugar varchar not null,
 foreign key (id) references pedidos(id) on update CASCADE,
 foreign key (autor,nombre,lugar) references cd(autor,nombre,lugar) on update cascade,
 primary key (id,autor,nombre,lugar)
-)
+);
 
 INSERT INTO CD (autor, nombre, lugar, precio, cantidad) VALUES
 ('The Beatles', 'Abbey Road', 'United Kingdom', 25,10),
