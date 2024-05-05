@@ -155,7 +155,7 @@ public class cesta extends HttpServlet {
             "<a href=\"/minitienda/index.html\">Volver al catalogo</a>\n" +
             "<br>\n" +
             "<br>\n" +
-        "<form method=\"get\" action=\"/minitienda/eliminar\">\n" +
+        "<form method=\"get\" action=\"/minitienda/pagar\">\n" +
             "<input type=\"submit\" value=\"Pagar\">\n" +
         "</form>\n" +
         " </body>\n" +
