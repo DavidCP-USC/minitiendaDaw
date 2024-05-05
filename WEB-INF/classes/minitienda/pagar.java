@@ -12,11 +12,11 @@ public class pagar extends HttpServlet {
         throws ServletException, IOException {
         // Generamos un objeto sesion
         HttpSession session = request.getSession(true);
-        ArrayList<CD> cesta = (ArrayList)session.getAttribute("cesta");
+        ListaCDS cesta = (ListaCDS)session.getAttribute("ListaCDS");
         float total = 0;
         if( cesta != null ){
             // Calculamos el importe total
-            for (CD cd : cesta) {
+            for (CD cd : cesta.getListaCD()) {
                 total += cd.getPrecio() * cd.getCantidad();
             }
             // HACER COMPROBACION DE PRECIO > 0 

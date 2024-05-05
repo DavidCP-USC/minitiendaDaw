@@ -16,7 +16,7 @@ public class eliminar extends HttpServlet {
         HttpSession session = request.getSession(true);
 
         // Obtenemos el hashmap de la sesión que contiene los CDs y sus precios
-        ArrayList<CD> cesta = (ArrayList) session.getAttribute("cesta");
+        ListaCDS cesta = (ListaCDS) session.getAttribute("ListaCDS");
 
         // Obtenemos los CDs marcados para eliminar del parámetro de la solicitud
         String[] cdsEliminar = request.getParameterValues("remove");
@@ -31,7 +31,7 @@ public class eliminar extends HttpServlet {
 
             // Iteramos sobre los CDs a eliminar y los añadimos a la lista
             for (String cdAEliminar: cdsEliminar) {
-                for (CD cdCesta : cesta) {
+                for (CD cdCesta : cesta.getListaCD()) {
                     System.out.println("cdCesta.getNombre(): " + cdCesta.getNombre() + " cdAEliminar: " + cdAEliminar);
                     if (cdCesta.getNombre().equals(cdAEliminar)) {
                         cdsAEliminar.add(cdCesta);
@@ -41,7 +41,7 @@ public class eliminar extends HttpServlet {
             
             // Iteramos sobre la lista de CDs a eliminar y los eliminamos del hashmap de la sesión
             for (CD cdAEliminar : cdsAEliminar) {
-                cesta.remove(cdAEliminar);
+                cesta.getListaCD().remove(cdAEliminar);
             }
 
             // Actualizamos el hashmap de la sesión con los CDs eliminados

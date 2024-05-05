@@ -8,6 +8,12 @@ import java.util.*;
 /** Servlet para almacenar CDs seleccionados por el usuario */
 
 public class cesta extends HttpServlet {
+
+    public void init(ServletConfig config) throws ServletException {
+	    super.init(config);
+    }
+
+
     public void doGet(HttpServletRequest request,
                     HttpServletResponse response)
         throws ServletException, IOException {
@@ -17,25 +23,19 @@ public class cesta extends HttpServlet {
     public void doPost(HttpServletRequest request,
                     HttpServletResponse response)
         throws ServletException, IOException {
+        System.out.println("HE ENTRADO\n");
         // Generamos un objeto sesion
         HttpSession session = request.getSession(true);
 
         // Generamos un objeto para el contexto de la aplicacion
         ServletContext context = getServletContext();
         
-
-        // Obtenemos el hashmap de la sesion que contiene los CDs y sus precios
-        ArrayList<CD> cesta = (ArrayList)session.getAttribute("cesta");
-        if ( cesta == null )
-        {
-            System.out.println("Sesion es null");
-            // Creamos un hashmap de Hashmap(String, Integer) y Float
-            ArrayList<CD> newCesta= new ArrayList<CD>();
-
-            session.setAttribute("cesta", newCesta);
-            cesta = (ArrayList)session.getAttribute("cesta");
+        ListaCDS lista = (ListaCDS)session.getAttribute("ListaCDS");
+        if (lista == null){
+            ListaCDS newlista = new ListaCDS();
+            session.setAttribute("ListaCDS", newlista);
+            lista = (ListaCDS)session.getAttribute("ListaCDS");
         }
-
         // Almacenamos los parametros de entrada en variables temporales
         String cd = request.getParameter("cd");   
         CD cdSeleccionado = new CD();
@@ -55,27 +55,34 @@ public class cesta extends HttpServlet {
             // Seleccionamos la cantidad de CDs
             String cant = request.getParameter("cantidad");
             cdSeleccionado.setCantidad(Integer.parseInt(cant));
+    
 
             // Comprobamos si el CD ya esta en la cesta
             boolean encontrado = false;
-            for (CD cdIterado : cesta) {
+            for (CD cdIterado : lista.getListaCD()) {
                 if (cdIterado.getNombre().equals(cdSeleccionado.getNombre())) {
                     cdIterado.setCantidad(cdIterado.getCantidad() + cdSeleccionado.getCantidad());
                     encontrado = true;
                 }
             }
             if (!encontrado){
-                cesta.add(cdSeleccionado);
+                lista.setListaCD(cdSeleccionado);
             }
 
-    
-            // Almacenamos la suma en la sesion
-            session.setAttribute("cesta", cesta);
+
+            
+            session.setAttribute("ListaCDS", lista);
+            System.out.println("Tamaño: " + lista.getListaCD().size());
         }
+        
+        // Pasamos el control al jsp
+        //RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/cesta2.jsp");
+        //dispatcher.forward(request, response);
+        gotoPage("/cesta2.jsp", request, response);
 
 
         // Generamos pagina de salida// Generamos pagina de salida
-        response.setContentType("text/html");
+        /*response.setContentType("text/html");
         PrintWriter out = response.getWriter();
         String docType =
             "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 " +
@@ -162,6 +169,16 @@ public class cesta extends HttpServlet {
         " </html>";
 
         out.println(docType + inicio + centro + fin);
-
+        */
     }
+
+    private void gotoPage(String address, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Creamos objeto RequestDispatcher
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(address);
+        dispatcher.forward(request, response);
+    }
+
+    public void destroy() {
+    }
+    
 }
