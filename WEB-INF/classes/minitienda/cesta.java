@@ -25,41 +25,52 @@ public class cesta extends HttpServlet {
         
 
         // Obtenemos el hashmap de la sesion que contiene los CDs y sus precios
-        HashMap<HashMap, Float> cdSesion = (HashMap)session.getAttribute("cdSesion");
-        if ( cdSesion == null )
+        ArrayList<CD> cesta = (ArrayList)session.getAttribute("cesta");
+        if ( cesta == null )
         {
             System.out.println("Sesion es null");
             // Creamos un hashmap de Hashmap(String, Integer) y Float
-            HashMap<HashMap, Float> newCDSesion = new HashMap<HashMap, Float>();
+            ArrayList<CD> newCesta= new ArrayList<CD>();
 
-            session.setAttribute("cdSesion", newCDSesion);
-            cdSesion = (HashMap)session.getAttribute("cdSesion");
+            session.setAttribute("cesta", newCesta);
+            cesta = (ArrayList)session.getAttribute("cesta");
         }
 
         // Almacenamos los parametros de entrada en variables temporales
-        String cd = request.getParameter("cd");      
+        String cd = request.getParameter("cd");   
+        CD cdSeleccionado = new CD();
         if (cd != null){
             // Recuperamos informacion del precio del CD
+            // Formato del CD: autor|nombre|lugar|precio
             StringTokenizer t = new StringTokenizer(cd,"|");
             cd = t.nextToken();
-            cd = cd + t.nextToken();
-            cd = cd + t.nextToken();
+            cdSeleccionado.setAutor(cd);
+            cd = t.nextToken();
+            cdSeleccionado.setNombre(cd);
+            cd = t.nextToken();
+            cdSeleccionado.setLugar(cd);
             String precioString = t.nextToken();
             precioString = precioString.replace('$',' ').trim();
-            float precio = Float.parseFloat(precioString);
+            cdSeleccionado.setPrecio(Float.parseFloat(precioString));
             // Seleccionamos la cantidad de CDs
             String cant = request.getParameter("cantidad");
-            Integer cantidad = new Integer(Integer.parseInt(cant));
-            
-            // Anadimos el nombre y el precio del CD al hashmap interno
-            HashMap<String, Integer> nombreCantidad = new HashMap<String, Integer>();
-            nombreCantidad.put(cd, cantidad);
-    
-            // Anadimos el hashmap interno al hashmap de la sesion y calculamos el precio total
-            cdSesion.put(nombreCantidad, precio*cantidad);
+            cdSeleccionado.setCantidad(Integer.parseInt(cant));
+
+            // Comprobamos si el CD ya esta en la cesta
+            boolean encontrado = false;
+            for (CD cdIterado : cesta) {
+                if (cdIterado.getNombre().equals(cdSeleccionado.getNombre())) {
+                    cdIterado.setCantidad(cdIterado.getCantidad() + cdSeleccionado.getCantidad());
+                    encontrado = true;
+                }
+            }
+            if (!encontrado){
+                cesta.add(cdSeleccionado);
+            }
+
     
             // Almacenamos la suma en la sesion
-            session.setAttribute("cdSesion", cdSesion);
+            session.setAttribute("cesta", cesta);
         }
 
 
@@ -105,16 +116,14 @@ public class cesta extends HttpServlet {
         String centro = "<tbody>\n";
 
         // Insertamos los datos en la tabla
-        for (HashMap<String, Float> cdPrecio : cdSesion.keySet()) {
-            for (String key : cdPrecio.keySet()) {
-                centro = centro +
-                    "<tr>\n" +
-                        "<td>" + key + "</td>\n" +
-                        "<td>" + cdPrecio.get(key) + "</td>\n" +
-                        "<td>" + cdSesion.get(cdPrecio) + "</td>\n" +
-                        "<td><input type=\"checkbox\" name=\"remove\" value=\"" + key + "\"></td>\n" +
-                " </tr>\n";
-            }
+        for (CD cdPrecio : cesta) {
+            centro = centro +
+                "<tr>\n" +
+                    "<td>" + cdPrecio.getNombre() + "</td>\n" +
+                    "<td>" + cdPrecio.getCantidad() + "</td>\n" +
+                    "<td>" + cdPrecio.getPrecio() + "</td>\n" +
+                    "<td><input type=\"checkbox\" name=\"remove\" value=\"" + cdPrecio.getNombre() + "\"></td>\n" +
+            " </tr>\n";
         }
 
         centro = centro + " </tbody>\n";
@@ -134,9 +143,10 @@ public class cesta extends HttpServlet {
 
         // Calculamos el importe total
         float total = 0;
-        for (Float f : cdSesion.values()) {
-            total = total + f;
+        for (CD cdPrecio : cesta) {
+            total = total + cdPrecio.getPrecio() * cdPrecio.getCantidad();
         }
+
 
         fin = fin + total + "</td>\n" +
                         " </tr>\n" +

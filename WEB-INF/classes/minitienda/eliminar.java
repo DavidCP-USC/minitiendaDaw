@@ -16,7 +16,7 @@ public class eliminar extends HttpServlet {
         HttpSession session = request.getSession(true);
 
         // Obtenemos el hashmap de la sesión que contiene los CDs y sus precios
-        HashMap<HashMap<String, Integer>, Float> cdSesion = (HashMap) session.getAttribute("cdSesion");
+        ArrayList<CD> cesta = (ArrayList) session.getAttribute("cesta");
 
         // Obtenemos los CDs marcados para eliminar del parámetro de la solicitud
         String[] cdsEliminar = request.getParameterValues("remove");
@@ -25,30 +25,27 @@ public class eliminar extends HttpServlet {
         System.out.println("cds a eliminar: " + Arrays.toString(cdsEliminar));
 
         // Verificamos si hay CDs para eliminar y si existe el hashmap de la sesión
-        if (cdsEliminar != null && cdSesion != null) {
-            // Creamos una lista para almacenar las claves de los CDs a eliminar
-            List<HashMap<String, Integer>> cdsAEliminar = new ArrayList<>();
+        if (cdsEliminar != null && cesta != null) {
+            // Creamos una lista de CDs a eliminar
+            ArrayList<CD> cdsAEliminar = new ArrayList<>(); 
 
-            // Iteramos sobre los CDs marcados para eliminar
-            for (String cd : cdsEliminar) {
-                // Iteramos sobre los CDs en el hashmap de la sesión
-                for (HashMap<String, Integer> cdPrecio : cdSesion.keySet()) {
-                    // Si encontramos una coincidencia en el nombre del CD
-                    if (cdPrecio.containsKey(cd)) {
-                        // Añadimos la clave del CD a la lista de CDs a eliminar
-                        cdsAEliminar.add(cdPrecio);
-                        break; // Salimos del bucle interno, ya que solo puede haber una coincidencia
+            // Iteramos sobre los CDs a eliminar y los añadimos a la lista
+            for (String cdAEliminar: cdsEliminar) {
+                for (CD cdCesta : cesta) {
+                    System.out.println("cdCesta.getNombre(): " + cdCesta.getNombre() + " cdAEliminar: " + cdAEliminar);
+                    if (cdCesta.getNombre().equals(cdAEliminar)) {
+                        cdsAEliminar.add(cdCesta);
                     }
                 }
             }
-
+            
             // Iteramos sobre la lista de CDs a eliminar y los eliminamos del hashmap de la sesión
-            for (HashMap<String, Integer> cdAEliminar : cdsAEliminar) {
-                cdSesion.remove(cdAEliminar);
+            for (CD cdAEliminar : cdsAEliminar) {
+                cesta.remove(cdAEliminar);
             }
 
             // Actualizamos el hashmap de la sesión con los CDs eliminados
-            session.setAttribute("cdSesion", cdSesion);
+            session.setAttribute("cesta", cesta);
         }
 
         // Redirigimos de vuelta al servlet que muestra el carrito de la compra
@@ -60,13 +57,15 @@ public class eliminar extends HttpServlet {
         throws ServletException, IOException {
         // Generamos un objeto sesion
         HttpSession session = request.getSession(true);
-        HashMap<HashMap, Float> cdSesion = (HashMap)session.getAttribute("cdSesion");
+        ArrayList<CD> cesta = (ArrayList)session.getAttribute("cesta");
         float total = 0;
-        if ( cdSesion != null ){
+        if( cesta != null ){
             // Calculamos el importe total
-            for (Float f : cdSesion.values()) {
-                total = total + f;
+            for (CD cd : cesta) {
+                total += cd.getPrecio() * cd.getCantidad();
             }
+            // HACER COMPROBACION DE PRECIO > 0 
+            // TODO
         }
 
         // Creamos el objeto out

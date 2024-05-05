@@ -4,7 +4,7 @@ public class CD {
     private String autor;
     private String nombre;
     private String lugar;
-    private int precio;
+    private Float precio;
     private int cantidad;
 
     // Getters y setters para autor
@@ -35,11 +35,11 @@ public class CD {
     }
 
     // Getters y setters para precio
-    public int getPrecio() {
+    public Float getPrecio() {
         return precio;
     }
 
-    public void setPrecio(int precio) {
+    public void setPrecio(Float precio) {
         this.precio = precio;
     }
 
