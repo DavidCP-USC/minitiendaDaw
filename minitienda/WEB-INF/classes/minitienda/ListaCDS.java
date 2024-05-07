@@ -4,6 +4,7 @@ import java.util.Vector;
 public class ListaCDS {
     private Vector<CD> listaCD= new Vector<CD>();
     private float importe=new Float(0.f);
+    private usuario user;
 
     // Getters y setters para autor
     public Vector<CD> getListaCD() {
@@ -20,5 +21,13 @@ public class ListaCDS {
 
     public void setImporte(Float importe) {
         this.importe = importe;
+    }
+
+    public void setUser(usuario user){
+        this.user=user;
+    }
+
+    public usuario getUser(){
+        return this.user;
     }
 }

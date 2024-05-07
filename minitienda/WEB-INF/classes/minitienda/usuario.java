@@ -1,7 +1,7 @@
 package minitienda;
 public class usuario {
     private String correo;
-    private String contrasinal;
+    private String nombre;
     private String tipoTargeta;
     private int numeroTargeta;
 
@@ -15,13 +15,13 @@ public class usuario {
         this.correo = correo;
     }
 
-    // Métodos getter y setter para contrasinal
-    public String getContrasinal() {
-        return contrasinal;
+    // Métodos getter y setter para nombre
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setContrasinal(String contrasinal) {
-        this.contrasinal = contrasinal;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     // Métodos getter y setter para tipoTargeta

@@ -7,31 +7,24 @@ import java.util.*;
 
 public class pagar extends HttpServlet {
 
-    public void doGet(HttpServletRequest request,
-                    HttpServletResponse response)
-        throws ServletException, IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Generamos un objeto sesion
         HttpSession session = request.getSession(true);
-        ListaCDS cesta = (ListaCDS)session.getAttribute("ListaCDS");
-        float total = 0;
-        if( cesta != null ){
-            // Calculamos el importe total
-            for (CD cd : cesta.getListaCD()) {
-                total += cd.getPrecio() * cd.getCantidad();
-            }
-            // HACER COMPROBACION DE PRECIO > 0 
-            // TODO
-        }
 
-        gotoPage("/pagar.jsp", request, response);
-        
-        // Invalidamos la sesion
-        session.invalidate();
+        // Obtenemos el hashmap de la sesión que contiene los CDs y sus precios
+        ListaCDS cesta = (ListaCDS) session.getAttribute("ListaCDS");
+
+        if(cesta.getImporte() <= 0){
+            gotoPage("/cesta.jsp", request, response);
+        }
+        else{
+            ///////////////////
+
+            gotoPage("/registroAntesDePagar.jsp", request, response);
+        }
     }
 
-    public void doPost(HttpServletRequest request,
-                    HttpServletResponse response)
-        throws ServletException, IOException {
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
 

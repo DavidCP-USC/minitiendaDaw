@@ -39,5 +39,27 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
  <url-pattern>/pagar</url-pattern>
 </servlet-mapping>
 
+<servlet>
+<servlet-name>conexionBD</servlet-name>
+<servlet-class>minitienda.conexionBD</servlet-class>
+</servlet>
+
+
+<servlet-mapping>
+ <servlet-name>conexionBD</servlet-name>
+ <url-pattern>/conexionBD</url-pattern>
+</servlet-mapping>
+
+<servlet>
+<servlet-name>registro</servlet-name>
+<servlet-class>minitienda.registro</servlet-class>
+</servlet>
+
+
+<servlet-mapping>
+ <servlet-name>registro</servlet-name>
+ <url-pattern>/registro</url-pattern>
+</servlet-mapping>
+
 
 </web-app>

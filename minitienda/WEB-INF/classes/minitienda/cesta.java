@@ -67,6 +67,7 @@ public class cesta extends HttpServlet {
             for (CD cdIterado : lista.getListaCD()) {
                 if (cdIterado.getNombre().equals(cdSeleccionado.getNombre())) {
                     cdIterado.setCantidad(cdIterado.getCantidad() + cdSeleccionado.getCantidad());
+                    cdIterado.setPrecio(cdIterado.getCantidad()*cdSeleccionado.getPrecio());
                     encontrado = true;
                 }
             }
@@ -74,6 +75,7 @@ public class cesta extends HttpServlet {
             if (!encontrado){
                 lista.setListaCD(cdSeleccionado);
             }
+
             lista.setImporte(importe);
 
 

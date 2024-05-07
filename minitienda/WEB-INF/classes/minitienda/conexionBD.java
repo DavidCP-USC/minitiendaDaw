@@ -3,15 +3,26 @@ package minitienda;
 import java.sql.*;
 import java.io.IOException;
 import java.util.Properties;
+import javax.servlet.*;
+import javax.servlet.http.*;
 
-public class conexionBD {
+public class conexionBD extends HttpServlet{
     String url = "jdbc:postgresql://localhost:5432/tiendadaw";
     String usuario = "sergio";
     String contrasena = "sergio";
+    conexionBD con = null;
 
     public Connection conexion;
 
-    
+    // El metodo doGet() conecta la BD
+    public void doGet(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        this.con = new conexionBD();
+    }
+
+    // El metodo doPost() desconecta la BD
+    public void doPost(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+        desconectar();
+    }
 
     public conexionBD() {
         testDriver();
@@ -50,6 +61,33 @@ public class conexionBD {
         } catch (SQLException e) {
             System.out.println("Error al cerrar la conexión: " + e.getMessage());
         }
+    }
+
+    /**
+     *  Este metodo ejecuta una sentencia de seleccion/consulta y muestra el resultado
+     *  @param con database connection
+     *  @param sqlStatement SQL SELECT statement to execute
+     */
+    protected void ejecutarConsulta(Connection con, String sqlStatement)
+	throws Exception 
+    {    
+	try 
+	    {
+		Statement s = con.createStatement( );
+		ResultSet rs = s.executeQuery( sqlStatement );
+		while ( rs.next() ) 
+		    {
+			String id = (rs.getObject("id").toString());
+			String text = (rs.getObject("text").toString());
+			System.out.println ( "Registro encontrado : " + id + " " + text );
+		    }
+		rs.close ( );
+	    } 
+	catch (SQLException e) 
+	    {
+		System.out.println ( "Error ejecutando la sentencia SQL" );
+		throw (e);
+	    }
     }
 
 }
