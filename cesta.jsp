@@ -54,7 +54,7 @@
         <input type="submit" value="Eliminar CDs Marcados">
     </form> 
     <br>
-    <!--<table>
+    <table>
         <thead>
             <tr>
                 <th>Importe</th>
@@ -63,15 +63,11 @@
         <tbody>
             <tr>
                 <td>
-                    // Calculamos el importe total
-                    float total = 0;
-                    for (CD cdPrecio : cesta) {
-                        total = total + cdPrecio.getPrecio() * cdPrecio.getCantidad();
-                    }
+                    <bd><c:out value="${ListaCDS.importe}"/></b>
                 </td>
             </tr>
         </tbody>
-    </table>-->
+    </table>
     <br>
     <a href="/minitienda/index.html">Volver al catalogo</a>
     <br>

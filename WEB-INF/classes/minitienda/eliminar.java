@@ -41,7 +41,9 @@ public class eliminar extends HttpServlet {
             
             // Iteramos sobre la lista de CDs a eliminar y los eliminamos del hashmap de la sesión
             for (CD cdAEliminar : cdsAEliminar) {
+                cesta.setImporte(cesta.getImporte()-cdAEliminar.getPrecio());
                 cesta.getListaCD().remove(cdAEliminar);
+                
             }
 
             // Actualizamos el hashmap de la sesión con los CDs eliminados
