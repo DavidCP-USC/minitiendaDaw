@@ -47,14 +47,14 @@ public class login extends HttpServlet {
         
         
         // Verificamos si el usuario ya existe en la BD
-        if(!con.existeUsuario(con.conexion, correo, contrasena)){
+        if(!con.existeUsuario(con.getConexion(), correo, contrasena)){
             gotoPage("/registrarUsuario.jsp", request, response);
         }
         else{
             session.setAttribute("ListaCDS", lista);
 
             // Guardamos el pedido en la BD
-            con.insertarPedido(con.conexion, lista);
+            con.insertarPedido(con.getConexion(), lista);
             
             gotoPage("/pagar.jsp", request, response);
             session.invalidate();

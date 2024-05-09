@@ -8,12 +8,12 @@ import javax.servlet.http.*;
 import java.util.Random;
 
 public class conexionBD extends HttpServlet{
-    String url = "jdbc:postgresql://localhost:5432/tiendadaw";
-    String usuario = "postgres";
-    String contrasena = "psql";
-    // id random
-    int id = 0;
-    public Connection conexion;
+    private String url = "jdbc:postgresql://localhost:5432/tiendadaw";
+    private String usuario = "postgres";
+    private String contrasena = "psql";
+    // Representa el ID más alto de la tabla de pedidos
+    private int id = 0;
+    private Connection conexion;
 
     public conexionBD() {
         testDriver();
@@ -118,7 +118,7 @@ public class conexionBD extends HttpServlet{
 }
 
     // Método para insertar un pedido en la base de datos
-    public void insertarPedido(Connection conn, ListaCDS lista) {
+    protected void insertarPedido(Connection conn, ListaCDS lista) {
         // Obtención de los datos del usuario
         String correoUsuario = lista.getUser().getCorreo();
 
@@ -170,6 +170,10 @@ public class conexionBD extends HttpServlet{
     // Método para generar un ID único para el pedido (puedes implementar tu lógica aquí)
     private void aumentarIDPedido() {
         this.id += 1;
+    }
+
+    public Connection getConexion() {
+        return this.conexion;
     }
 
 }

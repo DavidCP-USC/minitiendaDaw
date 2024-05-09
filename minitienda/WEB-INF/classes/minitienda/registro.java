@@ -51,10 +51,10 @@ public class registro extends HttpServlet {
         lista.getUser().setNumeroTarjeta(numTarjeta);
         
         // Verificamos si el usuario ya existe en la BD
-        if(!con.existeUsuario(con.conexion, correo, contrasena)){
-            con.introducirUsuario(con.conexion, correo, contrasena, tipoTarjeta, numTarjeta);
+        if(!con.existeUsuario(con.getConexion(), correo, contrasena)){
+            con.introducirUsuario(con.getConexion(), correo, contrasena, tipoTarjeta, numTarjeta);
             session.setAttribute("ListaCDS", lista);
-            con.insertarPedido(con.conexion, lista);
+            con.insertarPedido(con.getConexion(), lista);
             
             // Redirigimos a la pagina de pago
             gotoPage("/pagar.jsp", request, response);
