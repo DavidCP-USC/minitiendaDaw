@@ -23,12 +23,18 @@ public class cesta extends HttpServlet {
     public void doPost(HttpServletRequest request,
                     HttpServletResponse response)
         throws ServletException, IOException {
-        System.out.println("HE ENTRADO\n");
         // Generamos un objeto sesion
         HttpSession session = request.getSession(true);
 
         // Generamos un objeto para el contexto de la aplicacion
         ServletContext context = getServletContext();
+
+        conexionBD con = (conexionBD)session.getAttribute("conexionBD");
+        if (con == null){
+            conexionBD newcon = new conexionBD();
+            session.setAttribute("conexionBD", newcon);
+            con = (conexionBD)session.getAttribute("conexionBD");
+        }
         
         ListaCDS lista = (ListaCDS)session.getAttribute("ListaCDS");
         if (lista == null){
@@ -47,10 +53,13 @@ public class cesta extends HttpServlet {
             // Formato del CD: autor|nombre|lugar|precio
             StringTokenizer t = new StringTokenizer(cd,"|");
             cd = t.nextToken();
+            // Borramos el ultimo caracter
             cdSeleccionado.setAutor(cd);
             cd = t.nextToken();
+            // Borramos el primer y el ultimo caracter
             cdSeleccionado.setNombre(cd);
             cd = t.nextToken();
+            // Borramos el primer y el ultimo caracter
             cdSeleccionado.setLugar(cd);
             String precioString = t.nextToken();
             precioString = precioString.replace('$',' ').trim();

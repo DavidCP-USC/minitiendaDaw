@@ -10,14 +10,15 @@
     </head>
     <body>
         <h1>El pedido casi esta hecho!</h1>
+        <p>No hemos encontrado una cuenta con esas credenciales, pero puedes crear una!<p>
         <p>El importe final de tu compra es: <bd><c:out value="${ListaCDS.importe}"/></b></p>
-        <p>Inicia sesion con tu cuenta</p>
+        <p>Registra una cuenta</p>
         <form method="post" action="/minitienda/registro">
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" required><br>
-            
             <label for="correo">Correo electrónico:</label>
             <input type="email" id="correo" name="correo" required><br>
+
+            <label for="contrasena">Contrasena:</label>
+            <input type="password" id="contrasena" name="contrasena" required><br>
             
             <label for="tipoTarjeta">Tipo de tarjeta:</label>
             <select id="tipoTarjeta" name="tipoTarjeta" required>
@@ -29,8 +30,10 @@
             <label for="numeroTarjeta">Número de tarjeta:</label>
             <input type="text" id="numeroTarjeta" name="numeroTarjeta" required><br>
             
-            <input type="submit" value="Iniciar sesión">
+            <input type="submit" value="Registrar">
         </form>
+        <br>
+        <a href="/minitienda/login.jsp">Login</a>
         <br>
         <a href="/minitienda/index.html">Volver al catalogo</a>
     </body>

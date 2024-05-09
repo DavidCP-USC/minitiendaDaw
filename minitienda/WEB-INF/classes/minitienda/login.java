@@ -6,7 +6,7 @@ import javax.servlet.http.*;
 import java.util.*;
 
 
-public class registro extends HttpServlet {
+public class login extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
 	    super.init(config);
     }
@@ -32,9 +32,6 @@ public class registro extends HttpServlet {
            
         String contrasena = request.getParameter("contrasena");  
          
-        String tipoTarjeta = request.getParameter("tipoTarjeta");   
-        
-        String numTarjeta = request.getParameter("numeroTarjeta");
         
          
 
@@ -47,25 +44,24 @@ public class registro extends HttpServlet {
         
         lista.getUser().setCorreo(correo);
         lista.getUser().setContrasena(contrasena);
-        lista.getUser().setTipoTarjeta(tipoTarjeta);
-        lista.getUser().setNumeroTarjeta(numTarjeta);
+        
         
         // Verificamos si el usuario ya existe en la BD
         if(!con.existeUsuario(con.conexion, correo, contrasena)){
-            con.introducirUsuario(con.conexion, correo, contrasena, tipoTarjeta, numTarjeta);
-            session.setAttribute("ListaCDS", lista);
-            con.insertarPedido(con.conexion, lista);
-            
-            // Redirigimos a la pagina de pago
-            gotoPage("/pagar.jsp", request, response);
-            
-            
-
-            session.invalidate();
+            gotoPage("/registrarUsuario.jsp", request, response);
         }
         else{
-            gotoPage("/login.jsp", request, response);
+            session.setAttribute("ListaCDS", lista);
+
+            // Guardamos el pedido en la BD
+            con.insertarPedido(con.conexion, lista);
+            
+            gotoPage("/pagar.jsp", request, response);
+            session.invalidate();
         }
+       
+        
+        
     }
 
     private void gotoPage(String address, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

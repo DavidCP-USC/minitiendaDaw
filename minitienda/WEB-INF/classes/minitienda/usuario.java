@@ -1,45 +1,45 @@
 package minitienda;
 public class usuario {
     private String correo;
-    private String nombre;
-    private String tipoTargeta;
-    private int numeroTargeta;
+    private String contrasena;
+    private String tipotarjeta;
+    private String numerotarjeta;
 
 
     // Métodos getter y setter para correo
-    public String getCorreo() {
+    protected String getCorreo() {
         return correo;
     }
 
-    public void setCorreo(String correo) {
+    protected void setCorreo(String correo) {
         this.correo = correo;
     }
 
     // Métodos getter y setter para nombre
-    public String getNombre() {
-        return nombre;
+    protected String getContrasena() {
+        return contrasena;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    protected void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
-    // Métodos getter y setter para tipoTargeta
-    public String getTipoTargeta() {
-        return tipoTargeta;
+    // Métodos getter y setter para tipotarjeta
+    protected String getTipoTarjeta() {
+        return tipotarjeta;
     }
 
-    public void setTipoTargeta(String tipoTargeta) {
-        this.tipoTargeta = tipoTargeta;
+    protected void setTipoTarjeta(String tipotarjeta) {
+        this.tipotarjeta = tipotarjeta;
     }
 
-    // Métodos getter y setter para numeroTargeta
-    public int getNumeroTargeta() {
-        return numeroTargeta;
+    // Métodos getter y setter para numerotarjeta
+    protected String getNumeroTarjeta() {
+        return numerotarjeta;
     }
 
-    public void setNumeroTargeta(int numeroTargeta) {
-        this.numeroTargeta = numeroTargeta;
+    protected void setNumeroTarjeta(String numerotarjeta) {
+        this.numerotarjeta = numerotarjeta;
     }
 
 }

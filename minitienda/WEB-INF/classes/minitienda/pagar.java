@@ -20,7 +20,7 @@ public class pagar extends HttpServlet {
         else{
             ///////////////////
 
-            gotoPage("/registroAntesDePagar.jsp", request, response);
+            gotoPage("/login.jsp", request, response);
         }
     }
 
