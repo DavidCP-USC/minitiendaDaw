@@ -51,7 +51,7 @@ Para evitar problemas definiremos un único ```CLASSPATH``` que nos sirva para t
 El ```CLASSPATH``` debe incluir todas las referencias necesarias. Se proporciona un comando que define un ```CLASSPATH``` pero que ha de adecuarse a cada sistema, dependiendo del software que utilice y de la ubicación de los archivos.
 
 ```bash
-export CLASSPATH=/apache-tomcat-9.0.87/lib/servlet-api.jar:minitienda/minitienda/WEB-INF/classes:/minitienda/WEB-INF/lib/jstl.jar:minitienda/WEB-INF/lib/standard.jar:/minitienda/WEB-INF/lib/postgresql-42.7.3.jar
+export CLASSPATH=apache-tomcat-9.0.87/lib/servlet-api.jar:minitienda/WEB-INF/classes:/minitienda/WEB-INF/lib/jstl.jar:minitienda/WEB-INF/lib/standard.jar:/minitienda/WEB-INF/lib/postgresql-42.7.3.jar
 ```
 Una vez adecuado este el ```CLASSPATH``` a tu caso particular, ya puedes compilar las clases Java sin inconvenientes
 
