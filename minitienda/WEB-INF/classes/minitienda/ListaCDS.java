@@ -1,7 +1,8 @@
 package minitienda;
 import java.util.Vector;
+import java.io.Serializable;
 
-public class ListaCDS {
+public class ListaCDS implements Serializable {
     private Vector<CD> listaCD= new Vector<CD>();
     private float importe=new Float(0.f);
     private usuario user;

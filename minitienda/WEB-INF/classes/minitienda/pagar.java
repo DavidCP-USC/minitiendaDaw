@@ -6,7 +6,9 @@ import javax.servlet.http.*;
 import java.util.*;
 
 public class pagar extends HttpServlet {
-
+    public void init(ServletConfig config) throws ServletException {
+	    super.init(config);
+    }
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Generamos un objeto sesion
         HttpSession session = request.getSession(true);
@@ -32,6 +34,9 @@ public class pagar extends HttpServlet {
         // Creamos objeto RequestDispatcher
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(address);
         dispatcher.forward(request, response);
+    }
+
+    public void destroy() {
     }
 
 }

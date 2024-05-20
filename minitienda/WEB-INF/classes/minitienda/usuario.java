@@ -1,5 +1,8 @@
 package minitienda;
-public class usuario {
+
+import java.io.Serializable;
+
+public class usuario implements Serializable{
     private String correo;
     private String contrasena;
     private String tipotarjeta;

@@ -6,7 +6,9 @@ import javax.servlet.http.*;
 import java.util.*;
 
 public class eliminar extends HttpServlet {
-
+    public void init(ServletConfig config) throws ServletException {
+	    super.init(config);
+    }
 
     public void doPost(HttpServletRequest request,
                     HttpServletResponse response)
@@ -58,5 +60,8 @@ public class eliminar extends HttpServlet {
                     HttpServletResponse response)
         throws ServletException, IOException {
         doPost(request, response);
+    }
+
+    public void destroy() {
     }
 }

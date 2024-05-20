@@ -1,6 +1,7 @@
 package minitienda;
+import java.io.Serializable;
 
-public class CD {
+public class CD implements Serializable{
     private String autor;
     private String nombre;
     private String lugar;
